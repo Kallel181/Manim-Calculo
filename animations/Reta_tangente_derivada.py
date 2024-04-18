@@ -44,7 +44,7 @@ class tangente(Slide):
         #alterados posteriomente.
         secant = always_redraw(
             lambda: axes.get_secant_slope_group(
-                x = x.get_value(),
+                x = p.get_value(),
                 graph = graph,
                 dx = dx.get_value(),
                 dx_line_color = YELLOW,
