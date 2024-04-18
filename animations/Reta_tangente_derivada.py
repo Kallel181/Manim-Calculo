@@ -21,7 +21,10 @@ class tangente(Slide):
         
         #Função para desenharmos o grafico
         def f(x):
-            return 0.1 * (x - 2) * (x - 5) * (x - 7) + 7
+            return (x - 2) * (x - 5) * (x - 7) + 7
+        
+        #Objeto Manim que armazena o texto Latex da função que estamos desenhando o grafico
+        func_text = Tex(r'f(x)=')
 
         #Objeto Manim que armazena o grafico da função previamente definida
         graph = axes.plot(
