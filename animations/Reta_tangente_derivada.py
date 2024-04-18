@@ -1,5 +1,5 @@
 from manim import *
-from manim_slides import Slide
+from manim_presentation import Slide
 
 class tangente(Slide):
     def construct(self):
@@ -70,26 +70,28 @@ class tangente(Slide):
                 f(x.get_value() + dx.get_value())
             ))
         )
-
+ 
         #Funções de animação
         #Agora como todos os objetos já foram definidos, podemos continuar com a animação dos mesmos.
-        self.add(axes,axes_labels,graph)
+        self.play(Write(VGroup(axes,axes_labels,graph)))
         self.wait(0.1)
-        self.next_slide() 
+        self.pause()
 
         self.play(Create(VGroup(dot1,dot2,secant)))
-        self.next_slide()
+        self.pause()
 
         #Uma vez que os objetos que dependem do valor de x e dx foram colocados dentro das funções 
         #always_redraw eles serão alterados de acordo conforme os valores de x e dx forem alterados.
         self.play(dx.animate.set_value(0.001),run_time=8)
-        self.next_slide()
+        self.pause()
 
         self.play(x.animate.set_value(1),run_time=5)
-        self.next_slide()
+        self.pause()
 
         self.play(x.animate.set_value(7),run_time=5)
-        self.next_slide()
+        self.pause()
 
         self.play(x.animate.set_value(2),run_time=5)
-        self.next_slide()
+        self.pause()
+
+        self.wait()
