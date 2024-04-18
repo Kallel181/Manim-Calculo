@@ -95,31 +95,38 @@ class tangente(Slide):
         #Funções de animação
         #Agora como todos os objetos já foram definidos, podemos continuar com a animação dos mesmos.
         self.play(Write(VGroup(axes,axes_labels,graph,func_text)))
+        self.wait(0.1)
         self.pause()
 
         self.play(Write(derivada))
+        self.wait(0.1)
         self.pause()
 
         self.play(Create(VGroup(dot1,dot2,secant)))
+        self.wait(0.1)
         self.pause()
 
         #Uma vez que os objetos que dependem do valor de x e dx foram colocados dentro das funções 
         #always_redraw eles serão alterados de acordo conforme os valores de x e dx forem alterados.
         self.play(Write(VGroup(x_text,p_text)))
+        self.wait(0.1)
         self.pause()        
         
         self.play(dx.animate.set_value(0.001),run_time=8)
+        self.wait(0.1)
         self.pause()
 
         self.play(FadeOut(x_text))
-
         self.play(p.animate.set_value(1),run_time=5)
+        self.wait(0.1)
         self.pause()
 
         self.play(p.animate.set_value(7),run_time=5)
+        self.wait(0.1)
         self.pause()
 
         self.play(p.animate.set_value(2),run_time=5)
+        self.wait(0.1)
         self.pause()
 
         self.wait()
