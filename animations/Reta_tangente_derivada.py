@@ -141,8 +141,8 @@ class tangente(Slide):
         self.wait(0.1)
         self.pause()
 
-        self.play(p.animate.set_value(2),run_time=5)
-        self.wait(0.1)
-        self.pause()
+        self.play(
+            *[FadeOut(mob)for mob in self.mobjects]
+        )
 
         self.wait()
