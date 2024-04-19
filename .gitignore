@@ -156,5 +156,6 @@ cython_debug/
 animations/__pycache__
 animations/media
 animations/slides
-animations/presentation
+animations/presentation/
+
 
