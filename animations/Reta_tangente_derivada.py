@@ -144,5 +144,4 @@ class tangente(Slide):
         self.play(
             *[FadeOut(mob)for mob in self.mobjects]
         )
-
         self.wait()
