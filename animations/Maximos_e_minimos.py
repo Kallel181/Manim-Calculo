@@ -12,8 +12,7 @@ class maximo_minimo(Slide):
         function_tex = MathTex(r'f(x)=x^3-12x^2+45x-48')
         
         #Objeto Manim que armazena o texto Latex da derivada da função as ser desenhada
-        derivative_tex = MathTex('f\'(x)=3x^2-24x+45')
-        #raizes: 5 e 3 
+        derivative_tex = MathTex('f\'(x)=3x^2-24x+45') #raizes: 5 e 3 
 
         #Objeto Manim que armazena os eixos cartesianos
         #Com alterações na função a ser mostrada é importante mudar o valores do graficos para que
@@ -40,13 +39,23 @@ class maximo_minimo(Slide):
         def derivative(x):
             return ((3*x**2)-(24*x)+45)
         
+        #Objeto Manim que armazena o grafico da função previamente definida por f
         graph1 = axes1.plot(
             f, x_range=[1.8,6.5], color=BLUE
         )
 
+        #Value Tracker armazena o valor de x, e pode ser usado para animar a reta tangente 
+        #posteriormente.
+        #Os valores iniciais podem ser alterados conforme necessidade.
         x = ValueTracker(2)
+        
+        #dx nesse exemplo não precisa ser um ValueTracker, uma vez que só estamos 
+        #interessados na animação da reta tangente.
         dx = 0.001
 
+        #Objeto Manim que armazena a reta secante ao grafico conforme x e dx.
+        #O objeto precisa estar dentro da função always_redraw uma vez que o valor de x vai ser
+        #alterado posteriomente.
         tangent = always_redraw(
             lambda: axes1.get_secant_slope_group(
                 x = x.get_value(),
@@ -70,8 +79,14 @@ class maximo_minimo(Slide):
         #acima do ponto
         dot1.z_index = 1
 
+        #VGroup é usado para agrupar elementos em um unico lugar, assim modificações posteriores podem ser
+        #feitas diretamente no grupo ao invez de elemento a elemento.
         left_elements = VGroup(tangent,graph1,axes1,axes1_labels,function_tex)
 
+        #Objeto Manim que armazena os eixos cartesianos
+        #Com alterações na função a ser mostrada é importante mudar o valores do graficos para que
+        #a função seja melhor desenhada.
+        #Esse segundo grafico vai ser usado para mostrar a função derivada
         axes2 = (
             Axes(
                 x_range = [0,7,1],
@@ -82,15 +97,21 @@ class maximo_minimo(Slide):
             )
             .set_color(WHITE)
         )
+        #Movendo os eixos para a camada mais acima, para que o grafico não seja desenhado
+        #acima dos eixos
         axes2.z_index = 1
 
+        #Adicionando texto para indicar os eixos
         axes2_labels = axes2.get_axis_labels(x_label="x",y_label="y")
 
+        #Objeto Manim que armazena o grafico da função previamente definida por derivative
         graph2 = axes2.plot(
             derivative, x_range=[2.8,5.2], color=BLUE
         )
 
         
+        #Nesse bloco fazemos ajustes no posicionamentos do elementos para inserir o segundo
+        #grafico posteriomente
         derivative_tex.shift(UP*3)
         right_elements = VGroup(derivative_tex,axes2,axes2_labels,graph2)
         right_elements.scale(0.7)
@@ -98,10 +119,10 @@ class maximo_minimo(Slide):
         right_elements.shift(DOWN*0.2)
 
 
-
         self.play(Write(function_tex))
         self.wait(0.1)
         self.pause()
+
 
         function_tex_target = function_tex.generate_target()
         function_tex_target.shift(UP*3)
@@ -109,9 +130,11 @@ class maximo_minimo(Slide):
         self.wait(0.1)
         self.pause()
 
+
         self.play(Write(VGroup(axes1,graph1,axes1_labels,tangent,dot1)))
         self.wait(0.1)
         self.pause()
+
 
         left_elements_target = left_elements.generate_target()
         left_elements_target.scale(0.7)
@@ -121,13 +144,16 @@ class maximo_minimo(Slide):
         self.pause()
 
 
+
         self.play(Write(derivative_tex))
         self.wait(0.1)
         self.pause()
 
+
         self.play(Write(VGroup(axes2,axes2_labels,graph2)))
         self.wait(0.1)
         self.pause()
+
 
         derivative_tex_target = derivative_tex.generate_target()
         derivative_tex_target.shift(UP)
@@ -147,21 +173,26 @@ class maximo_minimo(Slide):
         self.wait(0.1)
         self.pause()
 
+        #Objeto Manim que muda de acordo com o valor de x
+        #O objeto precisa estar dentro da função always_redraw uma vez que os valores de p e dx irão ser
+        #alterados posteriomente.
         x_value_tex = always_redraw(
             lambda:
             MathTex('x=',str(x.get_value())[:5])
             .scale(0.7)
-            .shift(UP*3+LEFT)
+            .shift(UP*3.5+LEFT)
         )
         
+
+        #Objeto Manim que muda de acordo com o valor da função derivada.
+        #O objeto precisa estar dentro da função always_redraw uma vez que os valores de p e dx irão ser
+        #alterados posteriomente.
         derivative_function_value_tex = always_redraw (
             lambda:  
                 MathTex('f\'(',str(x.get_value())[:5],')=',str(derivative(x.get_value()))[:5])
                 .scale(0.7)   
                 .next_to(x_value_tex,DOWN)
         )
-    
-        derivative_function_value_tex.next_to(x,DOWN)
 
         self.play(Write(VGroup(x_value_tex,derivative_function_value_tex)))
         self.wait(0.1)
@@ -174,26 +205,6 @@ class maximo_minimo(Slide):
         self.play(x.animate.set_value(5),run_time=2)
         self.wait(0.1)
         self.pause()
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         self.play(
