@@ -9,10 +9,10 @@ class maximo_minimo(Slide):
         self.add(WM)
         
         #Objeto Manim que armazena o texto Latex da função as ser desenhada
-        function_tex = MathTex(r'f(x)=\frac{x^3}{10}-\frac{12x^2}{10}+\frac{45x}{10}-63')
+        function_tex = MathTex(r'f(x)=x^3-12x^2+45x-48')
         
         #Objeto Manim que armazena o texto Latex da derivada da função as ser desenhada
-        derivative_tex = MathTex('f\'(x)=\\frac{3x^2}{10}-\\frac{24x}{10}+\\frac{45}{10}')
+        derivative_tex = MathTex('f\'(x)=3x^2-24x+45')
         #raizes: 5 e 3 
 
         #Objeto Manim que armazena os eixos cartesianos
@@ -20,8 +20,8 @@ class maximo_minimo(Slide):
         #a função seja melhor desenhada.
         axes1 = (
             Axes(
-                x_range = [0,10,1],
-                x_length = 9,
+                x_range = [0,8,1],
+                x_length = 8,
                 y_range = [0,20,5],
                 y_length = 6,
                 axis_config = {"include_numbers": True, "include_tip":False},
@@ -34,14 +34,14 @@ class maximo_minimo(Slide):
         
         #Função para desenharmos o grafico
         def f(x):
-            return 0.1 * (x - 2) * (x - 5) * (x - 7) + 7
+            return (x**3 - (12*(x**2)) + 45*x) - 48
         
         #Função para desenharmos o grafico da função derivada
         def derivative(x):
-            return 0.1 * ((3*x**2)-(24*x)+45)
+            return ((3*x**2)-(24*x)+45)
         
         graph1 = axes1.plot(
-            f, x_range=[0,10], color=BLUE
+            f, x_range=[1.8,6.5], color=BLUE
         )
 
         x = ValueTracker(2)
@@ -74,9 +74,9 @@ class maximo_minimo(Slide):
 
         axes2 = (
             Axes(
-                x_range = [0,10,1],
-                x_length = 9,
-                y_range = [-1,5,1],
+                x_range = [0,7,1],
+                x_length = 7,
+                y_range = [-3,2,1],
                 y_length = 6,
                 axis_config = {"include_numbers": True, "include_tip":False},
             )
@@ -86,13 +86,13 @@ class maximo_minimo(Slide):
         axes2_labels = axes2.get_axis_labels(x_label="x",y_label="y")
 
         graph2 = axes2.plot(
-            derivative, x_range=[0,7.5], color=BLUE
+            derivative, x_range=[2.8,5.2], color=BLUE
         )
 
         
         derivative_tex.shift(UP*3)
         right_elements = VGroup(derivative_tex,axes2,axes2_labels,graph2)
-        right_elements.scale(0.6)
+        right_elements.scale(0.7)
         right_elements.shift(RIGHT*4)
         right_elements.shift(DOWN*0.5)
 
@@ -112,7 +112,7 @@ class maximo_minimo(Slide):
         self.pause()
 
         left_elements_target = left_elements.generate_target()
-        left_elements_target.scale(0.6)
+        left_elements_target.scale(0.7)
         left_elements_target.shift(LEFT*3)
         self.play(MoveToTarget(left_elements))
         self.wait(0.1)
