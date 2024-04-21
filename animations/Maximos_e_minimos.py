@@ -180,7 +180,7 @@ class maximo_minimo(Slide):
             lambda:
             MathTex('x=',str(x.get_value())[:5])
             .scale(0.7)
-            .shift(UP*3.5+LEFT)
+            .shift(UP*1.3+LEFT*4)
         )
         
 
