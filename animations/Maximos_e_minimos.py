@@ -82,6 +82,7 @@ class maximo_minimo(Slide):
             )
             .set_color(WHITE)
         )
+        axes2.z_index = 1
 
         axes2_labels = axes2.get_axis_labels(x_label="x",y_label="y")
 
@@ -94,7 +95,8 @@ class maximo_minimo(Slide):
         right_elements = VGroup(derivative_tex,axes2,axes2_labels,graph2)
         right_elements.scale(0.7)
         right_elements.shift(RIGHT*4)
-        right_elements.shift(DOWN*0.5)
+        right_elements.shift(DOWN*0.2)
+
 
 
         self.play(Write(function_tex))
@@ -126,6 +128,55 @@ class maximo_minimo(Slide):
         self.play(Write(VGroup(axes2,axes2_labels,graph2)))
         self.wait(0.1)
         self.pause()
+
+        derivative_tex_target = derivative_tex.generate_target()
+        derivative_tex_target.shift(UP)
+        self.play(MoveToTarget(derivative_tex))
+
+        solution_tex = MathTex('f\'(x)=0\\left\\{\\begin{matrix}x=3\\\\x=5\\end{matrix}\\right.').scale(0.7)
+        solution_tex.next_to(derivative_tex,DOWN)
+        self.play(Write(solution_tex))
+
+        right_dot1 = Dot().move_to(axes2.c2p(3,0))
+        right_dot2 = Dot().move_to(axes2.c2p(5,0))
+        
+        right_dot1.z_index = 1
+        right_dot2.z_index = 1
+
+        self.play(Write(VGroup(right_dot1,right_dot2))) 
+        self.wait(0.1)
+        self.pause()
+
+        x_value_tex = always_redraw(
+            lambda:
+            MathTex('x=',str(x.get_value())[:5])
+            .scale(0.7)
+            .shift(UP*3+LEFT)
+        )
+        
+        derivative_function_value_tex = always_redraw (
+            lambda:  
+                MathTex('f\'(',str(x.get_value())[:5],')=',str(derivative(x.get_value()))[:5])
+                .scale(0.7)   
+                .next_to(x_value_tex,DOWN)
+        )
+    
+        derivative_function_value_tex.next_to(x,DOWN)
+
+        self.play(Write(VGroup(x_value_tex,derivative_function_value_tex)))
+        self.wait(0.1)
+        self.pause()
+
+        self.play(x.animate.set_value(3),run_time=2)
+        self.wait(0.1)
+        self.pause()
+
+        self.play(x.animate.set_value(5),run_time=2)
+        self.wait(0.1)
+        self.pause()
+        
+
+
 
 
 
