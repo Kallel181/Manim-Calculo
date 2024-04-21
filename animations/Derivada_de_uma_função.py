@@ -40,6 +40,8 @@ class derivada(Slide):
 
 
 
+
+
         self.play(Write(function_tex))
         self.wait(0.1)
         self.pause()

@@ -3,6 +3,12 @@ from manim_presentation import Slide
 
 class tangente(Slide):
     def construct(self):
+        
+        WM = MathTex('KallelFiori').scale(0.5)
+        WM.set_opacity(0.4)
+        WM.move_to([6,-3.5,0])
+        self.add(WM)        
+        
         #Objeto Manim que armazena os eixos cartesianos
         #Com alterações na função a ser mostrada é importante mudar o valores do graficos para que
         #a função seja melhor desenhada.
