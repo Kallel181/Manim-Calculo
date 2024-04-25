@@ -158,4 +158,8 @@ animations/media
 animations/slides
 animations/presentation/
 
+examples/__pycache__
+examples/media
+examples/slides
+examples/presentation/
 
