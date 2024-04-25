@@ -6,9 +6,9 @@ O objetivo deste projeto é explorar o potencial do Manim, uma biblioteca de ani
 
 Conteúdo do Repositório
 
-/examples: Este diretório contém exemplos de animações basicas usadas durante algumas explicações no TCC.
+**/examples**: Este diretório contém exemplos de animações basicas usadas durante algumas explicações no TCC.
 
-/animations: Aqui estão os scripts em Python utilizados para criar as animações. Cada script está devidamente comentado para facilitar a compreensão do código.
+**/animations**: Aqui estão os scripts em Python utilizados para criar as animações. Cada script está devidamente comentado para facilitar a compreensão do código.
 
 ## Como Utilizar
 Para executar os scripts e visualizar as animações, siga as instruções abaixo:
