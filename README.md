@@ -5,7 +5,9 @@ Bem-vindo ao repositório de animações matemáticas criadas com Manim! Este re
 O objetivo deste projeto é explorar o potencial do Manim, uma biblioteca de animação matemática em Python, para aprimorar a compreensão e a comunicação de conceitos de Cálculo. Aqui você encontrará códigos fonte que demonstram desde conceitos fundamentais, como limites e derivadas, até aplicações mais avançadas, como integrais e séries, tudo apresentado de forma visualmente atraente e intuitiva.
 
 Conteúdo do Repositório
+
 /examples: Este diretório contém exemplos de animações basicas usadas durante algumas explicações no TCC.
+
 /animations: Aqui estão os scripts em Python utilizados para criar as animações. Cada script está devidamente comentado para facilitar a compreensão do código.
 
 ## Como Utilizar
