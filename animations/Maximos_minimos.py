@@ -8,10 +8,10 @@ class maximos_minimos(Slide):
         WM.move_to([6,-3.5,0])
         self.add(WM)
 
+        #Objeto Manim que armazena o texto Latex do "enunciado" do problema que vamos analisar
         example1 = MathTex("Estude f com relação a máximos e mínimos",tex_environment="flushleft")
         example1.scale(0.8)
         example1.shift(UP*3.5 + LEFT*3)
-
         
         #Objeto Manim que armazena o texto Latex da função as ser desenhada
         function_tex = MathTex(r'f(x)=x^3-3x^2+3')
@@ -131,7 +131,8 @@ class maximos_minimos(Slide):
             numbers_to_include = {0,2},
             label_direction=UP
         )
-        derivative_number_line.next_to(solution_tex,DOWN,buff=2.0)
+        derivative_number_line.next_to(solution_tex,DOWN,buff=1.0)
+        derivative_number_line_label = MathTex("f\'").scale(0.6).next_to(derivative_number_line,LEFT)
         
         def derivative(x):
             return (3*(x**2) - 6*x)        
@@ -153,7 +154,18 @@ class maximos_minimos(Slide):
             lambda: Dot(derivative_number_line.n2p(x.get_value()))
         )
 
-        self.play(Write(VGroup(derivative_number_line,x_text,dot2,derivative_text)))
+        function_number_line = NumberLine(
+            x_range =[-0.9,2.9,2],
+            length = 4,
+            color = WHITE,
+            numbers_to_include = {0,2},
+            label_direction=UP
+        )
+        function_number_line.next_to(derivative_number_line,DOWN,buff=1.0)
+        function_number_line_label = MathTex("f").scale(0.6).next_to(function_number_line,LEFT)
+
+
+        self.play(Write(VGroup(derivative_number_line,x_text,dot2,derivative_text,derivative_number_line_label,function_number_line,function_number_line_label)))
         self.wait(0.1)
         self.pause()
 
@@ -161,21 +173,54 @@ class maximos_minimos(Slide):
         self.wait(0.1)
         self.pause()
 
-        #add + 
+        plus1 = MathTex("+").move_to(derivative_number_line.n2p(-0.5))
+        plus1.shift(UP*0.3)
+        self.play(Write(plus1))
+        self.wait(0.1)
+        self.pause()
+
+        up_arrow1 = Vector(UR*0.3).scale(0.8).move_to(function_number_line.n2p(-0.5))
+        up_arrow1.shift(UP*0.3)
+        self.play(Write(up_arrow1))
+        self.wait(0.1)
+        self.pause()
+
 
         self.play(x.animate.set_value(2),run_time=2)
         self.wait(0.1)
         self.pause()
 
-        #add - 
+        minus = MathTex("-").move_to(derivative_number_line.n2p(1))
+        minus.shift(UP*0.3)
+        self.play(Write(minus))
+        self.wait(0.1)
+        self.pause()
+
+        down_arrow1 = Vector(DR*0.3).scale(0.8).move_to(function_number_line.n2p(1))
+        down_arrow1.shift(UP*0.3)
+        self.play(Write(down_arrow1))
+        self.wait(0.1)
+        self.pause()
 
         self.play(x.animate.set_value(2.5),run_time=2)
         self.wait(0.1)
         self.pause()
 
-        #add + 
-        
+        plus2 = MathTex("+").move_to(derivative_number_line.n2p(2.5))
+        plus2.shift(UP*0.3) 
+        self.play(Write(plus2))
+        self.wait(0.1)
+        self.pause()
 
+        up_arrow2 = Vector(UR*0.3).scale(0.8).move_to(function_number_line.n2p(2.5))
+        up_arrow2.shift(UP*0.3)
+        self.play(Write(up_arrow2))
+        self.wait(0.1)
+        self.pause()
+
+
+        res1 = MathTex("x=0 Máximo Local",tex_environment="flushleft")
+        res2 = MathTex("x=2 Mínimo Local",tex_environment="flushleft")
 
 
 
