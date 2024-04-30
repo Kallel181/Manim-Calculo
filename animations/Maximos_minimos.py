@@ -8,8 +8,13 @@ class maximos_minimos(Slide):
         WM.move_to([6,-3.5,0])
         self.add(WM)
 
+        example1 = MathTex("Estude f com relação a máximos e mínimos",tex_environment="flushleft")
+        example1.scale(0.8)
+        example1.shift(UP*3.5 + LEFT*3)
+
+        
         #Objeto Manim que armazena o texto Latex da função as ser desenhada
-        function_tex = MathTex(r'f(x)=x^3-12x^2+45x-48')
+        function_tex = MathTex(r'f(x)=x^3-3x^2+3')
 
         #Objeto Manim que armazena os eixos cartesianos
         #Com alterações na função a ser mostrada é importante mudar o valores do graficos para que
@@ -18,12 +23,13 @@ class maximos_minimos(Slide):
             Axes(
                 x_range = [-1,3,1],
                 x_length = 5,
-                y_range = [-1,3,1],
+                y_range = [-1,4,1],
                 y_length = 5,
                 axis_config = {"include_numbers": True, "include_tip":False},
             )
             .set_color(WHITE)
         )
+        axes1.z_index = 1
 
         #Adicionando texto para indicar os eixos
         axes1_labels = axes1.get_axis_labels(x_label="x",y_label="y")
@@ -74,31 +80,100 @@ class maximos_minimos(Slide):
 
         #VGroup é usado para agrupar elementos em um unico lugar, assim modificações posteriores podem ser
         #feitas diretamente no grupo ao invez de elemento a elemento.
-        left_elements = VGroup(tangent,graph1,axes1,axes1_labels,function_tex)
+        graph1_group = VGroup(tangent,graph1,axes1,axes1_labels,dot1)
+        graph1_group.scale(0.8)
 
-
-
+        self.play(Write(VGroup(example1)))
+        self.wait(0.1)
+        self.pause()        
+        
         self.play(Write(function_tex))
         self.wait(0.1)
         self.pause()
 
         function_tex_target = function_tex.generate_target()
-        function_tex_target.shift(UP*3)
+        function_tex_target.shift(UP*2)
         self.play(MoveToTarget(function_tex))
         self.wait(0.1)
         self.pause()
 
-        self.play(Write(VGroup(axes1,graph1,axes1_labels,tangent,dot1)))
+        graph1_group.next_to(function_tex,DOWN)
+        self.play(Write(VGroup(axes1,graph1,axes1_labels)))
         self.wait(0.1)
         self.pause()
 
+        left_elements = VGroup(graph1_group,function_tex)
         left_elements_target = left_elements.generate_target()
-        left_elements_target.scale(0.7)
+        left_elements_target.scale(1.1)
         left_elements_target.shift(LEFT*3)
         self.play(MoveToTarget(left_elements))
         self.wait(0.1)
         self.pause()
 
+        derivative_tex = MathTex('f\'(x)= 3x^2 - 6x')
+        derivative_tex.shift(RIGHT*3.5)       
+        derivative_tex.shift(UP*(function_tex.get_center()[1])) #alinhamento com a função anterior
+        self.play(Write(derivative_tex))
+        self.wait(0.1)
+        self.pause()
+
+        solution_tex = MathTex('f\'(x)=0\\left\\{\\begin{matrix}x=0\\\\x=2\\end{matrix}\\right.').scale(0.8)
+        solution_tex.next_to(derivative_tex,DOWN)
+        self.play(Write(solution_tex))
+        self.wait(0.1)
+        self.pause()
+
+
+        derivative_number_line = NumberLine(
+            x_range =[-0.9,2.9,2],
+            length = 4,
+            color = WHITE,
+            numbers_to_include = {0,2},
+            label_direction=UP
+        )
+        derivative_number_line.next_to(solution_tex,DOWN,buff=2.0)
+        
+        def derivative(x):
+            return (3*(x**2) - 6*x)        
+        
+        derivative_text = always_redraw(
+            lambda: Tex('f\'(x)='+str(derivative(x.get_value()))[:4])
+            .scale(0.6)
+            .next_to(derivative_number_line,UP)
+            .shift(LEFT*2)
+        ) 
+        
+        x_text = always_redraw(
+            lambda: Tex(r'x='+str(x.get_value())[:4])
+            .scale(0.6)
+            .next_to(derivative_text,UP)
+        )
+
+        dot2 = always_redraw(
+            lambda: Dot(derivative_number_line.n2p(x.get_value()))
+        )
+
+        self.play(Write(VGroup(derivative_number_line,x_text,dot2,derivative_text)))
+        self.wait(0.1)
+        self.pause()
+
+        self.play(x.animate.set_value(0),run_time=2)
+        self.wait(0.1)
+        self.pause()
+
+        #add + 
+
+        self.play(x.animate.set_value(2),run_time=2)
+        self.wait(0.1)
+        self.pause()
+
+        #add - 
+
+        self.play(x.animate.set_value(2.5),run_time=2)
+        self.wait(0.1)
+        self.pause()
+
+        #add + 
         
 
 
