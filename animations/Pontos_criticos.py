@@ -1,7 +1,7 @@
 from manim import *
 from manim_presentation import Slide
 
-class maximo_minimo(Slide):
+class pontos_criticos(Slide):
     def construct(self):      
         WM = MathTex('KallelFiori').scale(0.5)
         WM.set_opacity(0.4)
