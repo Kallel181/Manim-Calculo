@@ -219,10 +219,24 @@ class maximos_minimos(Slide):
         self.pause()
 
 
-        res1 = MathTex("x=0 Máximo Local",tex_environment="flushleft")
-        res2 = MathTex("x=2 Mínimo Local",tex_environment="flushleft")
+        function_number_line_elements = VGroup(plus1,plus2,minus,function_number_line,function_number_line_label)
+        derivative_number_line_elements = VGroup(up_arrow1,up_arrow2,down_arrow1,derivative_number_line_label,derivative_number_line,dot2)
+        
+        
+        right_elements = VGroup(derivative_tex,derivative_text,solution_tex,x_text,function_number_line_elements,derivative_number_line_elements)
+        right_elements_target = right_elements.generate_target()
 
+        right_elements_target.shift(UP)
+        self.play(MoveToTarget(right_elements))       
+        
+        res1 = MathTex("x=0 Máximo Local",tex_environment="flushleft").scale(0.8)
+        res1.next_to(right_elements,DOWN)
+        res2 = MathTex("x=2 Mínimo Local",tex_environment="flushleft").scale(0.8)
+        res2.next_to(res1,DOWN)
 
+        self.play(Write(VGroup(res1,res2)))
+        self.wait(0.1)
+        self.pause()
 
         self.play(
             *[FadeOut(mob)for mob in self.mobjects]
