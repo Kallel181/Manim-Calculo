@@ -29,7 +29,7 @@ class maximos_minimos(Slide):
             )
             .set_color(WHITE)
         )
-        axes1.z_index = 1
+        axes1.z_index = 1 #Movendo os eixos para uma camada mais acima
 
         #Adicionando texto para indicar os eixos
         axes1_labels = axes1.get_axis_labels(x_label="x",y_label="y")
@@ -97,11 +97,13 @@ class maximos_minimos(Slide):
         self.wait(0.1)
         self.pause()
 
+        #Alinhamentos precisa ser definido apos a modunça de posição do objeto function_tex
         graph1_group.next_to(function_tex,DOWN)
         self.play(Write(VGroup(axes1,graph1,axes1_labels)))
         self.wait(0.1)
         self.pause()
 
+        #Movendo os elementos mais a esquerda para abrir espaço a direita
         left_elements = VGroup(graph1_group,function_tex)
         left_elements_target = left_elements.generate_target()
         left_elements_target.scale(1.1)
@@ -123,7 +125,8 @@ class maximos_minimos(Slide):
         self.wait(0.1)
         self.pause()
 
-
+        #Objeto Manim que armazena uma linha de numeros, funcionando como o objeto Axes(), mas mostrando
+        #apenas um eixo.
         derivative_number_line = NumberLine(
             x_range =[-0.9,2.9,2],
             length = 4,
@@ -134,9 +137,13 @@ class maximos_minimos(Slide):
         derivative_number_line.next_to(solution_tex,DOWN,buff=1.0)
         derivative_number_line_label = MathTex("f\'").scale(0.6).next_to(derivative_number_line,LEFT)
         
+        #Função python que retorna os falores da função derivada
         def derivative(x):
             return (3*(x**2) - 6*x)        
         
+        #Objeto Manim que muda de acordo com o valor da derivada da f.
+        #O objeto precisa estar dentro da função always_redraw uma vez que o valor de x vai ser
+        #alterado posteriomente.        
         derivative_text = always_redraw(
             lambda: Tex('f\'(x)='+str(derivative(x.get_value()))[:4])
             .scale(0.6)
@@ -144,6 +151,9 @@ class maximos_minimos(Slide):
             .shift(LEFT*2)
         ) 
         
+        #Objeto Manim que muda de acordo com o valor de x.
+        #O objeto precisa estar dentro da função always_redraw uma vez que o valor de x vai ser
+        #alterado posteriomente.  
         x_text = always_redraw(
             lambda: Tex(r'x='+str(x.get_value())[:4])
             .scale(0.6)
@@ -151,7 +161,7 @@ class maximos_minimos(Slide):
         )
 
         dot2 = always_redraw(
-            lambda: Dot(derivative_number_line.n2p(x.get_value()))
+            lambda: Dot(derivative_number_line.n2p(x.get_value())) #n2p é semelhante a função c2p do objeto Axes()
         )
 
         function_number_line = NumberLine(
@@ -169,6 +179,9 @@ class maximos_minimos(Slide):
         self.wait(0.1)
         self.pause()
 
+        #Nos blocos abaixo fazemos as variações de x indo de -0.5 até 2.5, fazendo pequenas pausas
+        #para mostrar os valores da derivada, assim, obtendo as informações para classificarmos
+        #os pontos em minimos e maximos locais.
         self.play(x.animate.set_value(0),run_time=2)
         self.wait(0.1)
         self.pause()
@@ -218,10 +231,9 @@ class maximos_minimos(Slide):
         self.wait(0.1)
         self.pause()
 
-
+        #Agrupamento dos elementos a direita
         function_number_line_elements = VGroup(plus1,plus2,minus,function_number_line,function_number_line_label)
         derivative_number_line_elements = VGroup(up_arrow1,up_arrow2,down_arrow1,derivative_number_line_label,derivative_number_line,dot2)
-        
         
         right_elements = VGroup(derivative_tex,derivative_text,solution_tex,x_text,function_number_line_elements,derivative_number_line_elements)
         right_elements_target = right_elements.generate_target()
