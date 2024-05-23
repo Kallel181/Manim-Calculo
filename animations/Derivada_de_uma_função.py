@@ -3,6 +3,10 @@ from manim_presentation import Slide
 
 class derivada(Slide):
     def construct(self):
+        WM = MathTex('KallelFiori').scale(0.5)
+        WM.set_opacity(0.4)
+        WM.move_to([6,-3.5,0])
+        self.add(WM)
 
         #Texto Latex para a funçã oque vamos derivaar usando limite
         function_tex = MathTex('f(x)=x^2')
