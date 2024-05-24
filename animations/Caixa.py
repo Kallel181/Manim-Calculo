@@ -21,7 +21,26 @@ class tangente(ThreeDScene,Slide):
         h = ValueTracker(1)
         sheet_value = 10
 
-        self.set_camera_orientation(theta=270 * DEGREES,zoom=0.6)
+        self.set_camera_orientation(theta=270 * DEGREES,zoom=0.5)
+        
+        outer_sheet_full = always_redraw(
+            lambda: Square(side_length=sheet_value,color=BLUE)
+            .shift(np.array([0,0,-1])*(h.get_value()/2))
+            .set_fill(color=BLUE,opacity=0.5)
+        )
+
+        self.play(Write(outer_sheet_full))
+        self.wait(0.1)
+        self.pause()  
+
+        side_label = always_redraw(
+            lambda: MathTable('10')
+            .next_to(outer_sheet_full,DOWN)
+        )
+
+        self.play(Write(side_label))
+        self.wait(0.1)
+        self.pause()
         
         outer_sheet1 = always_redraw (
             lambda: Rectangle(height=sheet_value,width=sheet_value-2*h.get_value(),color=BLUE)
@@ -36,6 +55,17 @@ class tangente(ThreeDScene,Slide):
             .move_to(ORIGIN)
             .shift(np.array([0,0,-1])*(h.get_value()/2))
         )
+
+        outer_sheet_union = always_redraw(
+            lambda: Union(outer_sheet1,outer_sheet2)
+            .move_to(outer_sheet_full.get_center())
+
+        )   
+        removed_squares = always_redraw(
+            lambda: Difference(outer_sheet_full,outer_sheet_union,color=RED)
+            .move_to(outer_sheet_full.get_center())
+            .set_fill(color=RED,opacity=0.5)
+        )        
         
         inner_sheet = always_redraw(        
             lambda: Square(side_length=sheet_value-2*h.get_value(),color=GREEN)
@@ -43,16 +73,13 @@ class tangente(ThreeDScene,Slide):
             .move_to(outer_sheet1.get_center())
         )
 
-        self.play(Write(outer_sheet1),Write(outer_sheet2),Write(inner_sheet))
+        self.play(Write(inner_sheet))
         self.wait(0.1)
         self.pause()
 
-        h_value_label = always_redraw(
-            lambda: MathTex('h=',str(h.get_value())[:3])
-            .shift(UP*3)
-            .shift(LEFT*4)
-        )
-        self.add_fixed_in_frame_mobjects(h_value_label) 
+        self.play(Write(removed_squares))
+        self.wait(0.1)
+        self.pause()
 
         h_label1 = always_redraw(
             lambda: MathTex('h')
@@ -76,6 +103,13 @@ class tangente(ThreeDScene,Slide):
             .next_to(h_label2,LEFT)
         )
 
+        h_value_label = always_redraw(
+            lambda: MathTex('h=',str(h.get_value())[:3])
+            .shift(UP*3)
+            .shift(LEFT*4)
+        )
+        self.add_fixed_in_frame_mobjects(h_value_label) 
+
         self.play(Write(h_label1),Write(line_x),Write(h_label2),Write(line_y),Write(h_value_label))
         self.wait(0.1)
         self.pause()
@@ -85,7 +119,16 @@ class tangente(ThreeDScene,Slide):
         self.wait(0.1)
         self.pause()
 
+        #DBG
+        self.move_camera(phi=70 * DEGREES, theta=315 * DEGREES,zoom=0.8)
+        self.wait(0.1)
+        self.pause()
+
         self.play(h.animate.set_value(1),run_time=2)
+        self.wait(0.1)
+        self.pause()
+
+        self.play(Write(outer_sheet1),Write(outer_sheet2),FadeOut(outer_sheet_full),FadeOut(removed_squares))
         self.wait(0.1)
         self.pause()
 
