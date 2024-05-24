@@ -8,15 +8,7 @@ class caixa(ThreeDScene,Slide):
         WM.move_to([6,-3.5,0])
 
         self.add_fixed_in_frame_mobjects(WM) 
-        self.add(WM)
-
-        #RM - Test
-        axes1 = ThreeDAxes()
-        labels1 = axes1.get_axis_labels(
-            Text("x-axis").scale(0.7), Text("y-axis").scale(0.7), Text("")
-        )
-        self.add(axes1, labels1)
-        #RM - Test    
+        self.add(WM)  
     
         h = ValueTracker(1)
         sheet_value = 10
@@ -192,10 +184,34 @@ class caixa(ThreeDScene,Slide):
         self.wait(0.1)
         self.pause()
 
-        self.play(h.animate.set_value(1),run_time=2)
+        self.play(h.animate.set_value(2),run_time=2)
         self.wait(0.1)
         self.pause()
 
+        h_label_hight = always_redraw(
+            lambda: MathTex('h')
+            .move_to([0.5,-(sheet_value-(2*h.get_value()))/2,0])
+            .rotate(90 * DEGREES,[1,0,0])
+        )
+        line_hight = always_redraw(
+            lambda: Line(start=[0,0,h.get_value()/2],end=[0,0,-h.get_value()/2])
+            .move_to([0,-(sheet_value-(2*h.get_value()))/2,0])
+        )
+
+        self.play(Write(h_label_hight),Write(line_hight))
+        self.wait(0.1)
+        self.pause()
+        
+        side1_label = always_redraw(
+            lambda: MathTex('10-2h')
+            .move_to([0,(-(sheet_value-(2*h.get_value()))/2) - 0.5,-h.get_value()/2])
+        )
+
+        side2_label = always_redraw(
+            lambda: MathTex('10-2h')
+            .move_to([((sheet_value-(2*h.get_value()))/2) + 0.5,0,-h.get_value()/2])
+            .rotate(angle=90 * DEGREES, axis=[0,0,1])
+        )
 
         self.play(FadeOut(outer_sheet1),
                   FadeOut(outer_sheet2),
@@ -204,13 +220,9 @@ class caixa(ThreeDScene,Slide):
                   FadeOut(h_label2),
                   FadeOut(line_y),
                   FadeOut(line_x))
+        self.play(Write(side1_label),Write(side2_label))
         self.wait(0.1)
         self.pause()
-
-
-
-
-
 
 
 
