@@ -198,12 +198,13 @@ class caixa(ThreeDScene,Slide):
 
         h_label_hight = always_redraw(
             lambda: MathTex('h')
-            .move_to([0.5,-(sheet_value-(2*h.get_value()))/2,0])
+            .move_to([(sheet_value-(2*h.get_value()))/2,0.5,0])
             .rotate(90 * DEGREES,[1,0,0])
+            .rotate(90 * DEGREES,[0,0,1])
         )
         line_hight = always_redraw(
             lambda: Line(start=[0,0,h.get_value()/2],end=[0,0,-h.get_value()/2])
-            .move_to([0,-(sheet_value-(2*h.get_value()))/2,0])
+            .move_to([(sheet_value-(2*h.get_value()))/2,0,0])
         )
 
         self.play(Write(h_label_hight),Write(line_hight))
@@ -241,9 +242,6 @@ class caixa(ThreeDScene,Slide):
         self.wait(WAIT_TIME)
         self.pause()
 
-        reference = ThreeDAxes()
-        self.add(reference)
-
         axes = (
             Axes(
                 x_range = [0,5,1],
@@ -273,11 +271,48 @@ class caixa(ThreeDScene,Slide):
         graph.scale(0.9)
         graph.shift(RIGHT*3.5)
 
-        self.play(Write(axes),Write(graph))
+        self.play(Write(axes),Write(graph),h.animate.set_value(1),run_time=1)
         self.wait(WAIT_TIME)
         self.pause()
 
-        
+        line_vertical = always_redraw(
+            lambda: Line(start = axes.c2p(h.get_value(),0),
+                         end = axes.c2p(h.get_value(),vol(h.get_value())),
+                         color = YELLOW
+                        )
+        )
+        line_horizontal = always_redraw(
+            lambda: Line(start = axes.c2p(h.get_value(),vol(h.get_value())),
+                         end = axes.c2p(0,vol(h.get_value())),
+                         color = YELLOW
+                        )
+        )
+        self.add_fixed_in_frame_mobjects(line_vertical)
+        self.add_fixed_in_frame_mobjects(line_horizontal)
+
+        dot = always_redraw(
+            lambda: Dot(point=axes.c2p(h.get_value(),vol(h.get_value())),color=YELLOW)
+        )
+        self.add_fixed_in_frame_mobjects(dot)
+
+        volume_label = always_redraw(
+            lambda: MathTex('V(h)=',str(vol(h.get_value()))[:4])
+            .next_to(h_value_label,DOWN)
+        )
+        self.add_fixed_in_frame_mobjects(volume_label) 
+
+        self.play(Write(line_vertical),Write(line_horizontal),Write(dot),Write(volume_label))
+        self.wait(WAIT_TIME)
+        self.pause()        
+
+        self.play(h.animate.set_value(4.5),run_time=5)
+        self.wait(WAIT_TIME)
+        self.pause()
+
+        self.play(h.animate.set_value(2),run_time=5)
+        self.wait(WAIT_TIME)
+        self.pause()
+               
 
 
 
