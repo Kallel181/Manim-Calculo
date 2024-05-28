@@ -3,7 +3,7 @@ from manim_presentation import Slide
 
 class caixa(ThreeDScene,Slide):
     def construct(self):        
-        WAIT_TIME = 0.1
+        WAIT_TIME = 1
         
         WM = MathTex('KallelFiori').scale(0.5)
         WM.set_opacity(0.4)
@@ -196,18 +196,18 @@ class caixa(ThreeDScene,Slide):
         self.wait(WAIT_TIME)
         self.pause()
 
-        h_label_hight = always_redraw(
+        h_label_high = always_redraw(
             lambda: MathTex('h')
             .move_to([(sheet_value-(2*h.get_value()))/2,0.5,0])
             .rotate(90 * DEGREES,[1,0,0])
             .rotate(90 * DEGREES,[0,0,1])
         )
-        line_hight = always_redraw(
+        line_high = always_redraw(
             lambda: Line(start=[0,0,h.get_value()/2],end=[0,0,-h.get_value()/2])
             .move_to([(sheet_value-(2*h.get_value()))/2,0,0])
         )
 
-        self.play(Write(h_label_hight),Write(line_hight))
+        self.play(Write(h_label_high),Write(line_high))
         self.wait(WAIT_TIME)
         self.pause()
         
@@ -309,10 +309,11 @@ class caixa(ThreeDScene,Slide):
         self.wait(WAIT_TIME)
         self.pause()
 
-        self.play(h.animate.set_value(2),run_time=5)
+        self.play(h.animate.set_value(1),run_time=5)
         self.wait(WAIT_TIME)
-        self.pause()
-               
+        self.pause()   
 
-
-
+        self.play(
+            *[FadeOut(mob)for mob in self.mobjects]
+        )
+        self.wait()
