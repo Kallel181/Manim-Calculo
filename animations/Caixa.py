@@ -3,13 +3,15 @@ from manim_presentation import Slide
 
 class caixa(ThreeDScene,Slide):
     def construct(self):        
+        WAIT_TIME = 0.1
+        
         WM = MathTex('KallelFiori').scale(0.5)
         WM.set_opacity(0.4)
         WM.move_to([6,-3.5,0])
 
         self.add_fixed_in_frame_mobjects(WM) 
         self.add(WM)  
-    
+
         h = ValueTracker(1)
         sheet_value = 10
 
@@ -18,17 +20,17 @@ class caixa(ThreeDScene,Slide):
         outer_sheet_full = Square(side_length=sheet_value,color=BLUE).set_fill(color=BLUE,opacity=0.5).move_to(ORIGIN)
 
         self.play(Write(outer_sheet_full))
-        self.wait(0.1)
+        self.wait(WAIT_TIME)
         self.pause()  
 
         side_label = MathTex('10').scale(2).next_to(outer_sheet_full,DOWN)
 
         self.play(Write(side_label))
-        self.wait(0.1)
+        self.wait(WAIT_TIME)
         self.pause()
 
         self.play(FadeOut(side_label))
-        self.wait(0.1)
+        self.wait(WAIT_TIME)
         self.pause()
 
         
@@ -100,16 +102,16 @@ class caixa(ThreeDScene,Slide):
                   Write(h_label2_fixed),
                   Write(line_y_fixed),
                   Write(h_value_label))
-        self.wait(0.1)
+        self.wait(WAIT_TIME)
         self.pause()
 
         self.play(FadeOut(removed_squares))
         self.play(h.animate.set_value(3),run_time=2)
-        self.wait(0.1)
+        self.wait(WAIT_TIME)
         self.pause()
 
         self.play(h.animate.set_value(1),run_time=2)
-        self.wait(0.1)
+        self.wait(WAIT_TIME)
         self.pause()
 
         outer_sheet1 = always_redraw (
@@ -171,7 +173,7 @@ class caixa(ThreeDScene,Slide):
                   Write(line_y),
                   Write(line_x),
                   Write(inner_sheet))
-        self.wait(0.1)
+        self.wait(WAIT_TIME)
         self.pause()
         
         box = always_redraw(
@@ -183,15 +185,15 @@ class caixa(ThreeDScene,Slide):
 
         self.play(Write(box))
         self.move_camera(phi=70 * DEGREES, theta=315 * DEGREES,zoom=0.8)
-        self.wait(0.1)
+        self.wait(WAIT_TIME)
         self.pause()
 
         self.play(h.animate.set_value(3),run_time=2)
-        self.wait(0.1)
+        self.wait(WAIT_TIME)
         self.pause()
 
         self.play(h.animate.set_value(2),run_time=2)
-        self.wait(0.1)
+        self.wait(WAIT_TIME)
         self.pause()
 
         h_label_hight = always_redraw(
@@ -205,7 +207,7 @@ class caixa(ThreeDScene,Slide):
         )
 
         self.play(Write(h_label_hight),Write(line_hight))
-        self.wait(0.1)
+        self.wait(WAIT_TIME)
         self.pause()
         
         side1_label = always_redraw(
@@ -227,8 +229,55 @@ class caixa(ThreeDScene,Slide):
                   FadeOut(line_y),
                   FadeOut(line_x))
         self.play(Write(side1_label),Write(side2_label))
-        self.wait(0.1)
+        self.wait(WAIT_TIME)
         self.pause()
+
+        #=============== Part 2 ===============
+        volume_func = MathTex('V(h)=h(10-2h)^2')
+        self.add_fixed_in_frame_mobjects(volume_func) 
+        volume_func.shift(UP*3)
+
+        self.play(Write(volume_func))
+        self.wait(WAIT_TIME)
+        self.pause()
+
+        reference = ThreeDAxes()
+        self.add(reference)
+
+        axes = (
+            Axes(
+                x_range = [0,5,1],
+                x_length = 5,
+                y_range = [0,75,5],
+                y_length = 6,
+                x_axis_config = {"include_numbers": True, "include_tip":False},
+                y_axis_config={
+                "numbers_to_include": np.arange(0, 75.1, 5),
+                "include_tip":False},
+            )
+            .set_color(WHITE)
+        )
+        
+        def vol(x):
+            return x * (10-2*x)**2
+        
+        graph = axes.plot(
+            vol, x_range=[0,5], color=BLUE
+        )   
+
+        self.move_camera(zoom=0.4,frame_center=[0,6,-1])
+        self.add_fixed_in_frame_mobjects(axes) 
+        axes.scale(0.9)
+        axes.shift(RIGHT*3.5)
+        self.add_fixed_in_frame_mobjects(graph) 
+        graph.scale(0.9)
+        graph.shift(RIGHT*3.5)
+
+        self.play(Write(axes),Write(graph))
+        self.wait(WAIT_TIME)
+        self.pause()
+
+        
 
 
 
