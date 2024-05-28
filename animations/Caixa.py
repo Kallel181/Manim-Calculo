@@ -15,7 +15,7 @@ class caixa(ThreeDScene,Slide):
 
         self.set_camera_orientation(theta=270 * DEGREES,zoom=0.5)
         
-        outer_sheet_full = Square(side_length=sheet_value,color=BLUE).set_fill(color=BLUE,opacity=0.5)
+        outer_sheet_full = Square(side_length=sheet_value,color=BLUE).set_fill(color=BLUE,opacity=0.5).move_to(ORIGIN)
 
         self.play(Write(outer_sheet_full))
         self.wait(0.1)
@@ -35,14 +35,14 @@ class caixa(ThreeDScene,Slide):
         outer_sheet1_fixed = always_redraw(
             lambda: Rectangle(height=sheet_value,width=sheet_value-2*h.get_value(),color=BLUE)
             .set_fill(color=BLUE,opacity=0.5)
-            .move_to(ORIGIN)
+            .move_to(outer_sheet_full.get_center())
         )
 
 
         outer_sheet2_fixed = always_redraw(
             lambda: Rectangle(height=sheet_value-2*h.get_value(),width=sheet_value,color=BLUE)
             .set_fill(color=BLUE,opacity=0.5)
-            .move_to(ORIGIN)
+            .move_to(outer_sheet_full.get_center())
         )
 
 
@@ -155,6 +155,12 @@ class caixa(ThreeDScene,Slide):
         )
 
         self.play(FadeOut(h_label1_fixed),FadeOut(line_x_fixed),FadeOut(h_label2_fixed),FadeOut(line_y_fixed))
+        
+        outer_sheet_full.move_to(inner_sheet.get_center())
+        self.play(outer_sheet1_fixed.animate.move_to(inner_sheet.get_center()),
+                  outer_sheet2_fixed.animate.move_to(inner_sheet.get_center()),
+                  inner_sheet_fixed.animate.move_to(inner_sheet.get_center()))
+        
         self.play(Write(outer_sheet1),
                   Write(outer_sheet2),
                   FadeOut(outer_sheet1_fixed),
