@@ -3,6 +3,8 @@ from manim_presentation import Slide
 
 class pontos_criticos(Slide):
     def construct(self):      
+        WAIT_TIME = 1
+        
         WM = MathTex('KallelFiori').scale(0.5)
         WM.set_opacity(0.4)
         WM.move_to([6,-3.5,0])
@@ -120,19 +122,19 @@ class pontos_criticos(Slide):
 
 
         self.play(Write(function_tex))
-        self.wait(0.1)
+        self.wait(WAIT_TIME)
         self.pause()
 
 
         function_tex_target = function_tex.generate_target()
         function_tex_target.shift(UP*3)
         self.play(MoveToTarget(function_tex))
-        self.wait(0.1)
+        self.wait(WAIT_TIME)
         self.pause()
 
 
         self.play(Write(VGroup(axes1,graph1,axes1_labels,tangent,dot1)))
-        self.wait(0.1)
+        self.wait(WAIT_TIME)
         self.pause()
 
 
@@ -140,26 +142,42 @@ class pontos_criticos(Slide):
         left_elements_target.scale(0.7)
         left_elements_target.shift(LEFT*3)
         self.play(MoveToTarget(left_elements))
-        self.wait(0.1)
+        self.wait(WAIT_TIME)
         self.pause()
 
 
 
         self.play(Write(derivative_tex))
-        self.wait(0.1)
+        self.wait(WAIT_TIME)
         self.pause()
 
 
         self.play(Write(VGroup(axes2,axes2_labels,graph2)))
-        self.wait(0.1)
+        self.wait(WAIT_TIME)
         self.pause()
 
 
         derivative_tex_target = derivative_tex.generate_target()
         derivative_tex_target.shift(UP)
-        self.play(MoveToTarget(derivative_tex))
 
-        solution_tex = MathTex('f\'(x)=0\\left\\{\\begin{matrix}x=3\\\\x=5\\end{matrix}\\right.').scale(0.7)
+        axes2_elements=VGroup(axes2,graph2,axes2_labels)
+        axes2_elements_target  = axes2_elements.generate_target()
+        axes2_elements_target.shift(DOWN)
+        self.play(MoveToTarget(derivative_tex),MoveToTarget(axes2_elements))
+
+        solution_tex1 = MathTex('f\'(x)=0').scale(0.7)
+        solution_tex2 = MathTex('x = 3').scale(0.7)
+        solution_tex3 = MathTex('ou').scale(0.7)
+        solution_tex4 = MathTex('x = 5').scale(0.7)
+        
+        solution_tex3.next_to(solution_tex2,DOWN)
+        solution_tex4.next_to(solution_tex3,DOWN)
+        
+        solution_tex_x_values = VGroup(solution_tex2,solution_tex3,solution_tex4)
+        solution_tex_x_values.next_to(solution_tex1,RIGHT)
+
+        solution_tex = VGroup(solution_tex_x_values,solution_tex1)        
+        
         solution_tex.next_to(derivative_tex,DOWN)
         self.play(Write(solution_tex))
 
@@ -170,7 +188,7 @@ class pontos_criticos(Slide):
         right_dot2.z_index = 1
 
         self.play(Write(VGroup(right_dot1,right_dot2))) 
-        self.wait(0.1)
+        self.wait(WAIT_TIME)
         self.pause()
 
         #Objeto Manim que muda de acordo com o valor de x
@@ -195,15 +213,15 @@ class pontos_criticos(Slide):
         )
 
         self.play(Write(VGroup(x_value_tex,derivative_function_value_tex)))
-        self.wait(0.1)
+        self.wait(WAIT_TIME)
         self.pause()
 
         self.play(x.animate.set_value(3),run_time=2)
-        self.wait(0.1)
+        self.wait(WAIT_TIME)
         self.pause()
 
         self.play(x.animate.set_value(5),run_time=2)
-        self.wait(0.1)
+        self.wait(WAIT_TIME)
         self.pause()
 
 
