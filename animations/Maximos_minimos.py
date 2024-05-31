@@ -119,9 +119,21 @@ class maximos_minimos(Slide):
         self.wait(0.1)
         self.pause()
 
-        solution_tex = MathTex('f\'(x)=0\\left\\{\\begin{matrix}x=0\\\\x=2\\end{matrix}\\right.').scale(0.8)
+        solution_tex1 = MathTex('f\'(x)=0').scale(0.7)
+        solution_tex2 = MathTex('x = 0').scale(0.7)
+        solution_tex3 = MathTex('ou').scale(0.7)
+        solution_tex4 = MathTex('x = 2').scale(0.7)
+        
+        solution_tex3.next_to(solution_tex2,DOWN)
+        solution_tex4.next_to(solution_tex3,DOWN)
+        
+        solution_tex_x_values = VGroup(solution_tex2,solution_tex3,solution_tex4)
+        solution_tex_x_values.next_to(solution_tex1,RIGHT)
+
+        solution_tex = VGroup(solution_tex_x_values,solution_tex1)        
+        
         solution_tex.next_to(derivative_tex,DOWN)
-        self.play(Write(solution_tex))
+        self.play(Write(solution_tex))     
         self.wait(0.1)
         self.pause()
 
