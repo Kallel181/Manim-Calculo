@@ -25,7 +25,8 @@ class maximos_minimos(Slide):
                 x_length = 5,
                 y_range = [-1,4,1],
                 y_length = 5,
-                axis_config = {"include_numbers": True, "include_tip":False},
+                axis_config = {"include_numbers": True, 
+                               "include_tip":False}
             )
             .set_color(WHITE)
         )
@@ -173,7 +174,8 @@ class maximos_minimos(Slide):
         )
 
         dot2 = always_redraw(
-            lambda: Dot(derivative_number_line.n2p(x.get_value())) #n2p é semelhante a função c2p do objeto Axes()
+            #n2p é semelhante a função c2p do objeto Axes(
+            lambda: Dot(derivative_number_line.n2p(x.get_value()))
         )
 
         function_number_line = NumberLine(
@@ -194,6 +196,8 @@ class maximos_minimos(Slide):
         #Nos blocos abaixo fazemos as variações de x indo de -0.5 até 2.5, fazendo pequenas pausas
         #para mostrar os valores da derivada, assim, obtendo as informações para classificarmos
         #os pontos em minimos e maximos locais.
+        
+        #valor 0
         self.play(x.animate.set_value(0),run_time=2)
         self.wait(0.1)
         self.pause()
@@ -204,13 +208,15 @@ class maximos_minimos(Slide):
         self.wait(0.1)
         self.pause()
 
-        up_arrow1 = Vector(UR*0.3).scale(0.8).move_to(function_number_line.n2p(-0.5))
+        up_arrow1 = Vector(UR*0.3).scale(0.8)
+        up_arrow1.move_to(function_number_line.n2p(-0.5))
         up_arrow1.shift(UP*0.3)
         self.play(Write(up_arrow1))
         self.wait(0.1)
         self.pause()
 
-
+        #valor 2
+        
         self.play(x.animate.set_value(2),run_time=2)
         self.wait(0.1)
         self.pause()
@@ -226,6 +232,8 @@ class maximos_minimos(Slide):
         self.play(Write(down_arrow1))
         self.wait(0.1)
         self.pause()
+
+        #valor 2.5
 
         self.play(x.animate.set_value(2.5),run_time=2)
         self.wait(0.1)
