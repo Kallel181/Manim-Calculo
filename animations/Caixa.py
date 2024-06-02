@@ -263,15 +263,21 @@ class caixa(ThreeDScene,Slide):
             vol, x_range=[0,5], color=BLUE
         )   
 
-        self.move_camera(zoom=0.4,frame_center=[0,6,-1])
+        self.move_camera(theta=300 * DEGREES,zoom=0.4,frame_center=[0,6,-1])
         self.add_fixed_in_frame_mobjects(axes) 
         axes.scale(0.9)
-        axes.shift(RIGHT*3.5)
+        axes.shift(RIGHT*4)
         self.add_fixed_in_frame_mobjects(graph) 
         graph.scale(0.9)
-        graph.shift(RIGHT*3.5)
+        graph.shift(RIGHT*4)
+
 
         self.play(Write(axes),Write(graph),h.animate.set_value(1),run_time=1)
+        volume_func_target = volume_func.generate_target()
+        volume_func_target.scale(0.8)
+        volume_func_target.shift(UP*0.3)
+
+        self.play(MoveToTarget(volume_func))
         self.wait(WAIT_TIME)
         self.pause()
 
