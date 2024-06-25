@@ -189,7 +189,13 @@ class maximos_minimos(Slide):
         function_number_line_label = MathTex("f").scale(0.6).next_to(function_number_line,LEFT)
 
 
-        self.play(Write(VGroup(derivative_number_line,x_text,dot2,derivative_text,derivative_number_line_label,function_number_line,function_number_line_label)))
+        self.play(Write(VGroup(derivative_number_line,
+                               x_text,
+                               dot2,
+                               derivative_text,
+                               derivative_number_line_label,
+                               function_number_line,
+                               function_number_line_label)))
         self.wait(0.1)
         self.pause()
 
@@ -252,10 +258,24 @@ class maximos_minimos(Slide):
         self.pause()
 
         #Agrupamento dos elementos a direita
-        function_number_line_elements = VGroup(plus1,plus2,minus,function_number_line,function_number_line_label)
-        derivative_number_line_elements = VGroup(up_arrow1,up_arrow2,down_arrow1,derivative_number_line_label,derivative_number_line,dot2)
+        function_number_line_elements = VGroup(plus1,
+                                               plus2,
+                                               minus,
+                                               function_number_line,
+                                               function_number_line_label)
+        derivative_number_line_elements = VGroup(up_arrow1,
+                                                 up_arrow2,
+                                                 down_arrow1,
+                                                 derivative_number_line_label,
+                                                 derivative_number_line,
+                                                 dot2)
         
-        right_elements = VGroup(derivative_tex,derivative_text,solution_tex,x_text,function_number_line_elements,derivative_number_line_elements)
+        right_elements = VGroup(derivative_tex,
+                                derivative_text,
+                                solution_tex,
+                                x_text,
+                                function_number_line_elements,
+                                derivative_number_line_elements)
         right_elements_target = right_elements.generate_target()
 
         right_elements_target.shift(UP)

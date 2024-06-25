@@ -17,7 +17,9 @@ class caixa(ThreeDScene,Slide):
 
         self.set_camera_orientation(theta=270 * DEGREES,zoom=0.5)
         
-        outer_sheet_full = Square(side_length=sheet_value,color=BLUE).set_fill(color=BLUE,opacity=0.5).move_to(ORIGIN)
+        outer_sheet_full = Square(side_length=sheet_value,color=BLUE)
+        outer_sheet_full.set_fill(color=BLUE,opacity=0.5)
+        outer_sheet_full.move_to(ORIGIN)
 
         self.play(Write(outer_sheet_full))
         self.wait(WAIT_TIME)
@@ -32,7 +34,6 @@ class caixa(ThreeDScene,Slide):
         self.play(FadeOut(side_label))
         self.wait(WAIT_TIME)
         self.pause()
-
         
         outer_sheet1_fixed = always_redraw(
             lambda: Rectangle(height=sheet_value,width=sheet_value-2*h.get_value(),color=BLUE)
@@ -51,8 +52,8 @@ class caixa(ThreeDScene,Slide):
         outer_sheet_union = always_redraw(
             lambda: Union(outer_sheet1_fixed,outer_sheet2_fixed)
             .move_to(outer_sheet_full.get_center())
+        ) 
 
-        )   
         removed_squares = always_redraw(
             lambda: Difference(outer_sheet_full,outer_sheet_union,color=RED)
             .move_to(ORIGIN)
